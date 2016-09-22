@@ -1,6 +1,11 @@
 Cordova PouchDB hello world app, with SQLite Plugin
 =====
 
+### Changes from original project
+    PouchDB 3.3.1 to PouchDB 6
+    Whitelist updated in config.xml
+    This example assume you have a CouchDB server running on 192.168.0.108
+
 This is a basic Cordova app. It was created using the `cordova` CLI, by running:
 
     cordova create pouchdb-hello-world

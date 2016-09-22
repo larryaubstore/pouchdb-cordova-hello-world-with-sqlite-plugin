@@ -44,6 +44,23 @@ var app = {
         display.innerHTML += (db.adapter ? '&#10003; PouchDB is working.<br/>' : '&#10007; PouchDB is not working.<br/>');
         display.innerHTML += (websql.adapter ? '&#10003; SQLite plugin is supported.<br/>' : '&#10007; SQLite plugin is not supported.<br/>');
         display.innerHTML += (idb.adapter ? '&#10003; IndexedDB is supported.<br/>' : '&#10007; IndexedDB is not supported.<br/>');
+
+        jQuery.get("http://192.168.0.108:5984/_all_dbs", function( data ) { console.log(";;;;;; " +  data); });
+        
+        var remoteDB = new PouchDB('http://192.168.0.108:5984/benchsync');
+        var localDB = new PouchDB('testlocal', {adapter: 'websql'});
+
+
+        remoteDB.replicate.to(localDB).then(function (result) {
+
+          localDB.get('chat100').then(function (doc) {
+            display.innerHTML += "age ===> " + doc.age + '<br/>';
+          }).catch(function (err) {
+            display.innerHTML += err;
+          });
+        }).catch(function (err) {
+          display.innerHTML += err;
+        });
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
